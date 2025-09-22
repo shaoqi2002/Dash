@@ -1,0 +1,422 @@
+/* 为整个容器添加性能优化 */
+.widgets-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* 优化渲染性能 */
+    transform: translateZ(0);
+    will-change: auto;
+}
+
+.draggable-tag {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    cursor: move;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 100px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+    pointer-events: auto;
+    /* 硬件加速优化 */
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform: translateZ(0);
+}
+
+.draggable-tag:hover {
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 拖拽时的样式 */
+.draggable-tag.dragging {
+    transition: none; /* 禁用过渡动画，使拖拽更流畅 */
+    transform: rotate(2deg) scale(1.02) translateZ(0);
+    z-index: 1000;
+    opacity: 0.95;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    cursor: grabbing;
+}
+
+/* 确保拖拽状态下hover效果不生效 */
+.draggable-tag.dragging:hover {
+    transform: rotate(2deg) scale(1.02) translateZ(0);
+}
+
+/* 拖拽时的鼠标指针优化 */
+.draggable-tag {
+    cursor: grab;
+}
+
+.draggable-tag:active {
+    cursor: grabbing;
+}
+
+.draggable-tag.dragging {
+    cursor: grabbing;
+}
+
+/* 添加拖拽时的阴影动画 */
+@keyframes dragShadow {
+    0% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+    50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5); }
+    100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+}
+
+.draggable-tag.dragging {
+    animation: dragShadow 2s ease-in-out infinite;
+}
+
+/* 标签内容 */
+.tag-content {
+    flex: 1;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 关闭按钮 */
+.tag-close {
+    background: rgba(255, 0, 0, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: #e74c3c;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.tag-close:hover {
+    background: rgba(255, 0, 0, 0.4);
+    color: white;
+}
+
+/* 不同主题色彩 */
+.draggable-tag.theme-blue {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+}
+
+.draggable-tag.theme-green {
+    background: linear-gradient(135deg, #55efc4, #00b894);
+    color: white;
+}
+
+.draggable-tag.theme-orange {
+    background: linear-gradient(135deg, #fdcb6e, #f39c12);
+    color: white;
+}
+
+.draggable-tag.theme-purple {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    color: white;
+}
+
+.draggable-tag.theme-red {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+    color: white;
+}
+
+/* Bilibili集成区块样式 */
+.draggable-tag.bilibili-block {
+    background: linear-gradient(135deg, #00AEEC, #FB7299);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: move;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    width: 380px;
+    min-height: 450px;
+    max-height: 600px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    /* 硬件加速优化 */
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform: translateZ(0);
+}
+
+.draggable-tag.bilibili-block:hover {
+    transform: translateY(-3px) scale(1.01) translateZ(0);
+    box-shadow: 0 15px 40px rgba(0, 174, 236, 0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.draggable-tag.bilibili-block.dragging {
+    transition: none;
+    transform: rotate(1deg) scale(1.01) translateZ(0);
+    box-shadow: 0 20px 50px rgba(0, 174, 236, 0.5);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.draggable-tag.bilibili-block.dragging:hover {
+    transform: rotate(1deg) scale(1.01) translateZ(0);
+}
+
+.bilibili-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.bilibili-icon {
+    color: #FFE4E1;
+    margin-right: 8px;
+    font-size: 18px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.bilibili-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    flex: 1;
+}
+
+.refresh-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.refresh-btn i.fa-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.bilibili-header .tag-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.bilibili-header .tag-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.bilibili-content {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    max-height: 420px;
+}
+
+.bilibili-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.stats-text {
+    font-weight: bold;
+    color: white;
+    font-size: 13px;
+}
+
+.update-time {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.bilibili-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    border-left: 3px solid transparent;
+}
+
+.bilibili-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+    border-left-color: #FFE4E1;
+}
+
+.item-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.item-index.rank-top {
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+    to { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); }
+}
+
+.item-text {
+    flex: 1;
+    font-size: 14px;
+    color: white;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.hot-icon {
+    color: #FF6B35;
+    font-size: 14px;
+    margin-right: 8px;
+    animation: fire 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes fire {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.item-link-icon {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.bilibili-item:hover .item-link-icon {
+    opacity: 1;
+}
+
+.bilibili-footer {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.bilibili-footer small {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.bilibili-footer i {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 滚动条样式 */
+.bilibili-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bilibili-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.bilibili-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.bilibili-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* 添加新标签按钮 */
+.add-tag-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 15px 25px;
+    background: #00b894;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 5px 20px rgba(0, 184, 148, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.add-tag-btn:hover {
+    background: #00a085;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+}
