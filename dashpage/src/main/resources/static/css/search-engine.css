@@ -1,0 +1,357 @@
+/* 搜索引擎选择器样式 */
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: visible; /* 确保下拉菜单可以显示 */
+    transition: all 0.3s ease;
+    z-index: 100; /* 确保搜索框在合适的层级 */
+    isolation: isolate; /* 创建新的层叠上下文 */
+}
+
+.search-box:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.search-box:focus-within {
+    box-shadow: 0 8px 32px rgba(74, 144, 226, 0.3);
+    border-color: rgba(74, 144, 226, 0.5);
+}
+
+/* 引擎选择器 */
+.engine-selector {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    background: rgba(248, 250, 252, 0.8);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    user-select: none;
+    min-width: 120px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    position: relative;
+    z-index: 101; /* 略高于搜索框 */
+}
+
+.engine-selector:hover {
+    background: rgba(241, 245, 249, 0.9);
+}
+
+.engine-selector.active {
+    background: rgba(59, 130, 246, 0.1);
+    border-right-color: rgba(59, 130, 246, 0.3);
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.current-engine-icon {
+    font-size: 16px;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+}
+
+.current-engine-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-right: 8px;
+}
+
+.engine-selector .dropdown-arrow {
+    font-size: 12px;
+    color: #6b7280;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.engine-selector.active .dropdown-arrow {
+    transform: rotate(180deg);
+    color: #3b82f6;
+}
+
+/* 搜索输入框 */
+#searchInput {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #374151;
+    transition: all 0.3s ease;
+}
+
+#searchInput::placeholder {
+    color: #9ca3af;
+    transition: color 0.3s ease;
+}
+
+#searchInput:focus::placeholder {
+    color: #d1d5db;
+}
+
+/* 引擎下拉菜单 */
+.engine-dropdown {
+    position: absolute;
+    top: calc(100% + 4px); /* 更精确的定位 */
+    left: 0;
+    width: 140px; /* 与引擎选择器宽度匹配 (考虑padding) */
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* 确保在最高层级 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden; /* 防止水平滚动 */
+    pointer-events: none; /* 隐藏时不可点击 */
+}
+
+.engine-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto; /* 显示时可以点击 */
+}
+
+/* 下拉菜单滚动条样式 */
+.engine-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.engine-dropdown::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.engine-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.engine-dropdown::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* 引擎选项 */
+.engine-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative; /* 为active状态的左边框提供定位 */
+    background: white; /* 确保背景色 */
+}
+
+.engine-item:first-child {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.engine-item:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.engine-item:hover {
+    background: rgba(59, 130, 246, 0.08);
+    transform: translateX(2px); /* 减小偏移量 */
+}
+
+.engine-item.active {
+    background: rgba(59, 130, 246, 0.12);
+    border-left: 4px solid #3b82f6;
+    padding-left: 12px; /* 调整padding以保持对齐 */
+    font-weight: 600; /* 突出当前选中项 */
+}
+
+.engine-item .engine-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-left: 8px; /* 减少左边距以适应较窄的宽度 */
+    white-space: nowrap; /* 防止文字换行 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 超长文字省略 */
+}
+
+.engine-item.active .engine-name {
+    color: #1e40af; /* 当前选中项文字颜色 */
+}
+
+.engine-item i:first-child {
+    font-size: 16px;
+    width: 20px; /* 调整图标宽度 */
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* 防止图标压缩 */
+}
+
+.engine-item .check-icon {
+    color: #10b981;
+    font-size: 12px; /* 稍微减小勾选图标 */
+    margin-left: auto;
+    flex-shrink: 0; /* 防止勾选图标压缩 */
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .search-box {
+        border-radius: 20px;
+    }
+    
+    .engine-selector {
+        min-width: 80px;
+        padding: 10px 12px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+    
+    .current-engine-text {
+        display: none;
+    }
+    
+    #searchInput {
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+    
+    .engine-dropdown {
+        border-radius: 8px;
+        width: 100px; /* 对应移动端引擎选择器宽度 */
+    }
+    
+    .engine-item {
+        padding: 12px 14px;
+    }
+    
+    .engine-item:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    
+    .engine-item:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-box {
+        border-radius: 16px;
+    }
+    
+    .engine-selector {
+        min-width: 60px;
+        padding: 8px 10px;
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+    }
+    
+    .current-engine-icon {
+        font-size: 14px;
+        margin-right: 4px;
+    }
+    
+    #searchInput {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+    
+    .engine-dropdown {
+        width: 80px; /* 对应小屏幕引擎选择器宽度 */
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.engine-dropdown.show {
+    animation: fadeInUp 0.3s ease;
+}
+
+/* 主题色彩变量 */
+:root {
+    --search-primary-color: #3b82f6;
+    --search-hover-color: #2563eb;
+    --search-bg-color: rgba(255, 255, 255, 0.95);
+    --search-border-color: rgba(255, 255, 255, 0.2);
+    --search-text-color: #374151;
+    --search-placeholder-color: #9ca3af;
+}
+
+/* 深色主题适配 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --search-bg-color: rgba(31, 41, 55, 0.95);
+        --search-border-color: rgba(75, 85, 99, 0.3);
+        --search-text-color: #f3f4f6;
+        --search-placeholder-color: #6b7280;
+    }
+    
+    .search-box {
+        background: var(--search-bg-color);
+        border-color: var(--search-border-color);
+    }
+    
+    .engine-selector {
+        background: rgba(55, 65, 81, 0.8);
+        border-right-color: rgba(75, 85, 99, 0.3);
+    }
+    
+    .engine-selector:hover {
+        background: rgba(75, 85, 99, 0.6);
+    }
+    
+    .current-engine-text {
+        color: var(--search-text-color);
+    }
+    
+    #searchInput {
+        color: var(--search-text-color);
+    }
+    
+    #searchInput::placeholder {
+        color: var(--search-placeholder-color);
+    }
+    
+    .engine-dropdown {
+        background: rgba(31, 41, 55, 0.98);
+        border-color: rgba(75, 85, 99, 0.3);
+    }
+    
+    .engine-item {
+        border-bottom-color: rgba(75, 85, 99, 0.2);
+    }
+    
+    .engine-item .engine-name {
+        color: var(--search-text-color);
+    }
+}

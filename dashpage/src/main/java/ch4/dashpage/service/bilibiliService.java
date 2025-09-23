@@ -31,14 +31,13 @@ public class bilibiliService implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        logger.info("应用启动时开始爬取Bilibili热门数据...");
         crawlBilibili();
         logger.info("Bilibili热门数据爬取完成");
     }
     
     public void crawlBilibili() throws Exception {
         try {
-            String url = "https://api.bilibili.com/x/web-interface/wbi/search/square?limit=10";
+            String url = "https://api.bilibili.com/x/web-interface/wbi/search/square?limit=30";
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()

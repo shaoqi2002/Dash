@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能工作台</title>
+    <title>Dash!</title>
     <!-- CSS文件 -->
     <link th:href="@{/css/dashboard.css}" rel="stylesheet">
     <link th:href="@{/css/draggable-tags.css}" rel="stylesheet">
+    <link th:href="@{/css/search-engine.css}" rel="stylesheet">
     <!-- Font Awesome图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -15,14 +16,22 @@
         <!-- 中央搜索区域 -->
         <div class="search-container">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="搜索任何内容..." autocomplete="off">
-                <i class="fas fa-search search-icon"></i>
+                <!-- 搜索引擎选择器 -->
+                <div class="engine-selector">
+                    <i class="current-engine-icon fab fa-google"></i>
+                    <span class="current-engine-text">Google</span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                
+                <!-- 搜索输入框 -->
+                <input type="text" id="searchInput" placeholder="Google" autocomplete="off">
+                
+                <!-- 搜索引擎下拉菜单 -->
+                <div class="engine-dropdown">
+                    <!-- 这里会通过JavaScript动态填充 -->
+                </div>
             </div>
             <div class="quick-actions">
-                <button class="quick-btn" onclick="addNewTag()">
-                    <i class="fas fa-plus"></i>
-                    添加标签
-                </button>
                 <button class="quick-btn" onclick="refreshBilibiliData()">
                     <i class="fas fa-sync-alt"></i>
                     刷新热门
@@ -42,15 +51,10 @@
         <div class="widgets-container">
             <!-- 标签会通过JavaScript动态添加到这里 -->
         </div>
-
-        <!-- 添加新标签按钮 -->
-        <button class="add-tag-btn" onclick="addNewTag()">
-            <i class="fas fa-plus"></i>
-            添加标签
-        </button>
     </div>
 
     <!-- JavaScript文件 -->
+    <script th:src="@{/js/search-engine.js}"></script>
     <script th:src="@{/js/dashboard.js}"></script>
     <script th:src="@{/js/draggable-tags.js}"></script>
 </body>

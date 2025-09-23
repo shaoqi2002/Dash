@@ -9,7 +9,7 @@ public class DashboardController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("title", "智能工作台");
+        model.addAttribute("title", "Dash!");
         return "dashboard";
     }
 

@@ -107,7 +107,7 @@ class DraggableTagManager {
         let contentHtml = `
             <div class="bilibili-header">
                 <i class="fas fa-play-circle bilibili-icon"></i>
-                <span class="bilibili-title">Bilibili热门 (${biliData.length}条)</span>
+                <span class="bilibili-title">Bilibili热门</span>
                 <button class="refresh-btn" title="刷新数据">
                     <i class="fas fa-sync-alt"></i>
                 </button>
@@ -438,11 +438,9 @@ class DraggableTagManager {
                 console.log('单个Bilibili区块刷新成功:', result.data.length, '条');
             } else {
                 console.error('刷新Bilibili区块失败:', result.message);
-                alert('刷新失败: ' + result.message);
             }
         } catch (error) {
             console.error('刷新Bilibili区块请求失败:', error);
-            alert('网络请求失败，请检查网络连接');
         } finally {
             const refreshBtn = blockElement.querySelector('.refresh-btn i');
             if (refreshBtn) {
@@ -527,9 +525,9 @@ async function refreshBilibiliData() {
     if (window.tagManager) {
         const success = await window.tagManager.refreshBilibiliData();
         if (success) {
-            alert('Bilibili数据刷新成功！');
+            console.log('Bilibili数据刷新成功！');
         } else {
-            alert('Bilibili数据刷新失败！');
+            console.log('Bilibili数据刷新失败！');
         }
     }
 }
